@@ -21,6 +21,15 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Annonces::class, orphanRemoval: true)]
     private $annonces;
 
+    #[ORM\Column(type: 'boolean')]
+    private $active;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $updateAt;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $createdAt;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
@@ -61,6 +70,43 @@ class Category
         return $this;
     }
 
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(?\DateTimeImmutable $updateAt): self
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+    
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
     public function removeAnnonce(Annonces $annonce): self
     {
         if ($this->annonces->removeElement($annonce)) {
@@ -71,5 +117,9 @@ class Category
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->name;
     }
 }

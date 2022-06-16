@@ -32,7 +32,7 @@ class Annonces
     private $createdAt;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'annonces')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $category;
 
     public function getId(): ?int
