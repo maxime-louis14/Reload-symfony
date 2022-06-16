@@ -86,6 +86,7 @@ class Annonces
         $this->active = $active;
 
         return $this;
+
     }
 
     public function getUpdateAt(): ?\DateTimeImmutable
@@ -104,6 +105,7 @@ class Annonces
     {
         return $this->createdAt;
     }
+    dfdfd
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
