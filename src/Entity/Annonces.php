@@ -105,7 +105,7 @@ class Annonces
     {
         return $this->createdAt;
     }
-    dfdfd
+    
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
