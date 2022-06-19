@@ -39,13 +39,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Utilisateur', 'fa fa-user', User::class);
 
-        yield MenuItem::section('annonces');
-
+        yield MenuItem::section('Category');
         yield MenuItem::subMenu('Category', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Add categories', 'fas fa-plus', Category::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show categories', 'fas fa-eye', Category::class)
         ]);
-
+        
+        yield MenuItem::section('annonces');
         yield MenuItem::subMenu('Annonces', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Create annonces', 'fas fa-plus', Annonces::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show annonces', 'fas fa-eye', Annonces::class)

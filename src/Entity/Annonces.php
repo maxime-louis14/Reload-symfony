@@ -26,9 +26,9 @@ class Annonces
     private $active;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private $updateAt;
+    private $updatedAt;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $createdAt;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'annonces')]
@@ -89,14 +89,14 @@ class Annonces
 
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updateAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdateAt(?\DateTimeImmutable $updateAt): self
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
-        $this->updateAt = $updateAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

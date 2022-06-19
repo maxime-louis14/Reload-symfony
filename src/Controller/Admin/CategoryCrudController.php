@@ -25,7 +25,7 @@ class CategoryCrudController extends AbstractCrudController
             TextField::new('name'),
             BooleanField::new('active'),
             DateTimeField::new('updatedAt')->hideOnForm(),
-            DateTimeField::new('createAt')->hideOnForm(),
+            DateTimeField::new('createdAt')->hideOnForm(),
         ];
     }
 
@@ -34,6 +34,17 @@ class CategoryCrudController extends AbstractCrudController
         if (!$entityInstance instanceof category) return;
         $entityInstance->setCreatedAt(new \DateTimeImmutable);
         parent::persistEntity($em, $entityInstance);
+    }
+
+    public function deleteEntity(EntityManagerInterface $em, $entityInstance): void
+    {
+        if (!$entityInstance instanceof Category ) return;
+
+        foreach ($entityInstance->getAnnonces() as $annonces) {
+            $em->remove($annonces);           
+        }
+
+        parent::deleteEntity($em, $entityInstance);
     }
 
 }
