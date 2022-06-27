@@ -28,7 +28,7 @@ class Annonces
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'annonces')]

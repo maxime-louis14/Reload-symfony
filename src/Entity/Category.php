@@ -27,7 +27,7 @@ class Category
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
     public function __construct()
