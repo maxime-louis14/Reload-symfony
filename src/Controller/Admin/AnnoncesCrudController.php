@@ -63,21 +63,21 @@ class AnnoncesCrudController extends AbstractCrudController
             DateTimeField::new('createdAt')->hideOnForm(),
         ];
     }
-/*
+    
     public function persistEntity(EntityManagerInterface $em, $entityInstance): void
     {
-        if (!$entityInstance instanceof category) return;
+        if (!$entityInstance instanceof Annonces) return;
         $entityInstance->setCreatedAt(new \DateTimeImmutable);
         parent::persistEntity($em, $entityInstance);
     }
 
     public function updateEntity(EntityManagerInterface $em, $entityInstance): void
     {
-        if (!$entityInstance instanceof annonces) return;
+        if (!$entityInstance instanceof Annonces) return;
         $entityInstance->setCreatedAt(new \DateTimeImmutable);
         parent::persistEntity($em, $entityInstance);
     }
-    */
+    
 
     public function duplicateAnnonces(AdminContext $context, AdminUrlGenerator $adminUrlGenerator, EntityManagerInterface $em)
     {

@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Controller\Admin\AnnoncesCrudController;
 use App\Entity\Annonces;
 use App\Entity\Category;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
@@ -18,7 +19,7 @@ class AdminSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function setCreatedAt(BeforeEntityPersistedEvent $event)
+    public function setCreatedAt(BeforeEntityPersistedEvent $event, AnnoncesCrudController $annoncesCrudController)
     {
         $entityInstance = $event->getEntityInstance();
 
