@@ -4,7 +4,8 @@ namespace App\Entity;
 
 use App\Repository\AnnoncesRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: AnnoncesRepository::class)]
 class Annonces
@@ -12,6 +13,7 @@ class Annonces
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Vich\Uploadable]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -22,6 +24,15 @@ class Annonces
 
     #[ORM\Column(type: 'string', length: 255)]
     private $image;
+
+    #[Vich\UploadableField(mapping: "annonces_images", fileNameProperty: "imageName", size: "imageSize")]
+    private ?File $imageFile = null;
+
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $imageName = null;
+
+
 
     #[ORM\Column(type: 'boolean')]
     private $active;
@@ -65,6 +76,8 @@ class Annonces
         return $this;
     }
 
+
+
     public function getImage(): ?string
     {
         return $this->image;
@@ -87,7 +100,6 @@ class Annonces
         $this->active = $active;
 
         return $this;
-
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
@@ -106,7 +118,7 @@ class Annonces
     {
         return $this->createdAt;
     }
-    
+
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
