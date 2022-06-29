@@ -28,9 +28,6 @@ class Annonces
     #[Vich\UploadableField(mapping: "annonces_images", fileNameProperty: "imageName", size: "imageSize")]
     private ?File $imageFile = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $imageName = null;
-
     #[ORM\Column(type: 'boolean')]
     private $active;
 
@@ -97,17 +94,6 @@ class Annonces
     {
         return $this->imageFile;
     }
-
-    public function setImageName(?string $imageName): void
-    {
-        $this->imageName = $imageName;
-    }
-
-    public function getImageName(): ?string
-    {
-        return $this->imageName;
-    }
-
 
     public function getImage(): ?string
     {

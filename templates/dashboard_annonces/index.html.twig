@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces{% endblock %}
+
+{% block content %}
+<h1> Créer des annonces </h1>
+<a href="{{ path('app_account')}}">Retourner à mon compte</a><br/>
+<hr/>
+
+  {{ form(form) }}
+
+<hr>
+
+{% endblock %}

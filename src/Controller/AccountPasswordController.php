@@ -13,9 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccountPasswordController extends AbstractController
 {
 
-
     #[Route('/compte/modifier-mon-mot-de-passe', name: 'account_password')]
-
 
     public function index(Request $request, ManagerRegistry $mr, UserPasswordHasherInterface $passwordHasher): Response
     {
