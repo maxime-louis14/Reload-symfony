@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Annonces;
-use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;

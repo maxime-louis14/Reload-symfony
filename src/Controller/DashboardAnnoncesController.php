@@ -9,30 +9,63 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
+
 
 class DashboardAnnoncesController extends AbstractController
 {
     #[Route('/dashboard/annonces', name: 'dashboard_annonces')]
 
-    public function index(Request $request, ManagerRegistry $mr): Response
+    public function index(Request $request, ManagerRegistry $mr, SluggerInterface $slugger): Response
     {
         $manager = $mr->getManager();
         $annonces = new Annonces();
 
         $form = $this->createForm(CreerAnnoncesType::class, $annonces);
 
+        //Est ce que le form a été soumis
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($request->isMethod('POST')) {
 
-            $annonces = $form->getData();
+            $form->submit($request->request->get($form->getName()));
 
-            
-            $manager->persist($annonces);
-            $manager->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $image = $form->get('image')->getData();
+                // this condition is needed because the 'image' field is not required
+                // so the PDF file must be processed only when a file is uploaded
+                if ($image) {
+                    $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
+
+                    // Move the file to the directory where image are stored
+                    try {
+                        $image->move(
+                            $this->getParameter('annonces_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
+
+                    // updates the 'image' property to store the PDF file name
+                    // instead of its contents
+                    $annonces->setImage($newFilename);
+                }
+
+                $annonces = $form->getData();
+
+                $manager->persist($annonces);
+                $manager->flush();
 
 
-            //return $this->redirectToRoute('task_success');
+                //return $this->redirectToRoute('task_success');
+            }
         }
 
         return $this->render('dashboard_annonces/index.html.twig', [
