@@ -19,6 +19,10 @@ class CreerAnnoncesType extends AbstractType
             ->add('updatedAt')
             ->add('createdAt')
             ->add('category')
+            
+            ->add('submit', SubmitType::class, [
+                'label' => "Mettre à jour"
+            ]);
         ;
     }
 
