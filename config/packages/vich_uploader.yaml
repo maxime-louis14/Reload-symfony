@@ -5,5 +5,5 @@ vich_uploader:
 
   mappings:
     annonces:
-      uri_prefix: /images/annonces
+      uri_prefix: /public/images/annonces
       upload_destination: "%kernel.project_dir%/public/images/annonces"
