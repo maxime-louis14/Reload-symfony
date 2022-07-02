@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnnoncesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnnoncesRepository::class)]
@@ -19,8 +21,6 @@ class Annonces
     #[ORM\Column(type: 'text')]
     private $description;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $image;
 
     #[ORM\Column(type: 'boolean')]
     private $active;
@@ -34,6 +34,16 @@ class Annonces
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'annonces')]
     #[ORM\JoinColumn(nullable: true)]
     private $category;
+
+    /**
+     * @ORm\OneToMany(targetEntity="App\Entity\Images", mappedBy="annonces", orphanRemoval=true, cascade={"persist"})
+     */
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -64,14 +74,33 @@ class Annonces
         return $this;
     }
 
-    public function getImage(): ?string
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getImages(): Collection
     {
-        return $this->image;
+        return $this->images;
     }
 
-    public function setImage(string $image): self
+    public function addImage(Images $image): self
     {
-        $this->image = $image;
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setAnnonces($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getAnnonces() === $this) {
+                $image->setAnnonces(null);
+            }
+        }
 
         return $this;
     }
