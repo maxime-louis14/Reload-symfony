@@ -20,7 +20,7 @@ class Annonces
     private $description;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $image;
+    private $imageFilename;
 
     #[ORM\Column(type: 'boolean')]
     private $active;
@@ -64,14 +64,15 @@ class Annonces
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImageFilenames()
     {
-        return $this->image;
+        return $this->imageFilename;
     }
 
-    public function setImage(string $image): self
+    public function setImageFilename($imageFilename)
     {
-        $this->image = $image;
+        $this->imageFilename = $imageFilename;
+
         return $this;
     }
 

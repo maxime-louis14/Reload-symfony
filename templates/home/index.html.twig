@@ -34,10 +34,10 @@
         <div class="row featurette">
             <div class="col-md-7">
                 <h2 class="featurette-heading">{{ annonce.name }} <span class="text-muted"> </span></h2>
-                <p class="lead">{{annonce.description |raw}}</p>
+                <p class="lead">{{annonce.description | raw}}</p>
             </div>
             <div class="col-md-5">
-            <img class="image-article" src="{{asset('\assets\upload\images\annonces\IMG_4066.jpg' ~ annonce.image)}}"alt="Les images des annonces" >
+            <img class="image-annonces" src="{{asset('\assets\upload\images\annonces' ~ annonce.image)}}"alt="Les images des annonces" >
             </div>
         </div>
         {% endfor %}
