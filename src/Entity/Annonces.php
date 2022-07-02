@@ -64,15 +64,14 @@ class Annonces
         return $this;
     }
 
-    public function getImageFilename()
+    public function getImage(): ?string
     {
-        return $this->imageFilename;
+        return $this->image;
     }
 
-    public function setImage($image)
+    public function setImage(string $image): self
     {
         $this->image = $image;
-
         return $this;
     }
 
