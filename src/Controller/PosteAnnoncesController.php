@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Images;
-use App\Entity\AnnoncesUser;
+use DateTimeImmutable;
 use App\Form\AnnoncesType;
-use App\Repository\AnnoncesUserRepository;
+use App\Entity\AnnoncesUser;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\AnnoncesUserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,7 +56,10 @@ class PosteAnnoncesController extends AbstractController
                 $img->setName($fichier);
                 $annonce->addImage($img);
             }
-
+            
+            $date = new DateTimeImmutable();
+            $annonce->setCreatedAt($date);
+            $annonce->setUpdatedAt($date);
             $entityManager->persist($annonce);
             $entityManager->flush();
 

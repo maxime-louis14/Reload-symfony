@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\AnnoncesRepository;
+use App\Repository\AnnoncesUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnnoncesController extends AbstractController
 {
     #[Route('/', name: 'app_annonces')]
-    public function index(AnnoncesRepository $annoncesRepository): Response
+    public function index(AnnoncesUserRepository $annoncesRepository): Response
     {
         $annonces = $annoncesRepository -> findAll();
 
