@@ -11,7 +11,6 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Image</th>
                 <th>Active</th>
                 <th>UpdatedAt</th>
                 <th>CreatedAt</th>
@@ -24,7 +23,6 @@
                 <td>{{ annonce.id }}</td>
                 <td>{{ annonce.name }}</td>
                 <td>{{ annonce.description }}</td>
-                <td>{{ annonce.image }}</td>
                 <td>{{ annonce.active ? 'Yes' : 'No' }}</td>
                 <td>{{ annonce.updatedAt ? annonce.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ annonce.createdAt ? annonce.createdAt|date('Y-m-d H:i:s') : '' }}</td>
@@ -35,7 +33,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

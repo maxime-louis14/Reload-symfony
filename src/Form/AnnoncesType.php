@@ -5,11 +5,9 @@ namespace App\Form;
 use App\Entity\Annonces;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AnnoncesType extends AbstractType
 {
@@ -18,7 +16,7 @@ class AnnoncesType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('image', FileType::class, [
+            ->add('images', FileType::class, [
                 'label' => 'Votre image de l\'événement (Des fichier images uniquement)',
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,

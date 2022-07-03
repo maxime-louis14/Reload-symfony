@@ -21,6 +21,8 @@ class Annonces
     #[ORM\Column(type: 'text')]
     private $description;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $image;
 
     #[ORM\Column(type: 'boolean')]
     private $active;
@@ -35,15 +37,14 @@ class Annonces
     #[ORM\JoinColumn(nullable: true)]
     private $category;
 
-    /**
-     * @ORm\OneToMany(targetEntity="App\Entity\Images", mappedBy="annonces", orphanRemoval=true, cascade={"persist"})
-     */
+    #[ORM\OneToMany(mappedBy: 'annonces', targetEntity: Images::class, orphanRemoval: true)]
     private $images;
 
     public function __construct()
     {
         $this->images = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -74,35 +75,9 @@ class Annonces
         return $this;
     }
 
-
-    /**
-     * @return Collection<int, Images>
-     */
-    public function getImages(): Collection
+    public function getImage(): ?string
     {
-        return $this->images;
-    }
-
-    public function addImage(Images $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setAnnonces($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Images $image): self
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getAnnonces() === $this) {
-                $image->setAnnonces(null);
-            }
-        }
-
-        return $this;
+        return $this->image;
     }
 
     public function getActive(): ?bool
@@ -116,6 +91,8 @@ class Annonces
 
         return $this;
     }
+
+
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
@@ -150,6 +127,36 @@ class Annonces
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setAnnonces($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getAnnonces() === $this) {
+                $image->setAnnonces(null);
+            }
+        }
 
         return $this;
     }
