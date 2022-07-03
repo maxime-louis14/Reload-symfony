@@ -16,9 +16,9 @@ class Images
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\ManyToOne(targetEntity: Annonces::class, inversedBy: 'images')]
+    #[ORM\ManyToOne(targetEntity: AnnoncesUser::class, inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: false)]
-    private $annonces;
+    private $AnnoncesUser;
 
     public function getId(): ?int
     {
@@ -37,14 +37,14 @@ class Images
         return $this;
     }
 
-    public function getAnnonces(): ?Annonces
+    public function getAnnoncesUser(): ?AnnoncesUser
     {
-        return $this->annonces;
+        return $this->AnnoncesUser;
     }
 
-    public function setAnnonces(?Annonces $annonces): self
+    public function setAnnoncesUser(?AnnoncesUser $AnnoncesUser): self
     {
-        $this->annonces = $annonces;
+        $this->AnnoncesUser = $AnnoncesUser;
 
         return $this;
     }

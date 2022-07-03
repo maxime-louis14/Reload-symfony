@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\AnnoncesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Images;
+use App\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AnnoncesRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: AnnoncesRepository::class)]
 class Annonces
@@ -21,7 +23,7 @@ class Annonces
     #[ORM\Column(type: 'text')]
     private $description;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255,)]
     private $image;
 
     #[ORM\Column(type: 'boolean')]
@@ -37,13 +39,14 @@ class Annonces
     #[ORM\JoinColumn(nullable: true)]
     private $category;
 
-    #[ORM\OneToMany(mappedBy: 'annonces', targetEntity: Images::class, orphanRemoval: true)]
-    private $images;
+    // #[ORM\OneToMany(mappedBy: 'annonces', targetEntity: Images::class, orphanRemoval: true,)]
+    // #[ORM\JoinColumn(nullable: true)]
+    // private $images;
 
-    public function __construct()
-    {
-        $this->images = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->images = new ArrayCollection();
+    // }
 
 
     public function getId(): ?int
@@ -80,6 +83,12 @@ class Annonces
         return $this->image;
     }
 
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+        return $this;
+    }
+
     public function getActive(): ?bool
     {
         return $this->active;
@@ -91,8 +100,6 @@ class Annonces
 
         return $this;
     }
-
-
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
@@ -131,33 +138,33 @@ class Annonces
         return $this;
     }
 
-    /**
-     * @return Collection<int, Images>
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
+    // /**
+    //  * @return Collection<int, Images>
+    //  */
+    // public function getImages(): Collection
+    // {
+    //     return $this->images;
+    // }
 
-    public function addImage(Images $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setAnnonces($this);
-        }
+    // public function addImage(Images $image): self
+    // {
+    //     if (!$this->images->contains($image)) {
+    //         $this->images[] = $image;
+    //         $image->setAnnonces($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeImage(Images $image): self
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getAnnonces() === $this) {
-                $image->setAnnonces(null);
-            }
-        }
+    // public function removeImage(Images $image): self
+    // {
+    //     if ($this->images->removeElement($image)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($image->getAnnonces() === $this) {
+    //             $image->setAnnonces(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

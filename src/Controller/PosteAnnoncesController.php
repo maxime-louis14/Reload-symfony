@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Annonces;
+use App\Entity\Images;
+use App\Entity\AnnoncesUser;
 use App\Form\AnnoncesType;
-use App\Repository\AnnoncesRepository;
+use App\Repository\AnnoncesUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ class PosteAnnoncesController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $annonces = $entityManager
-            ->getRepository(Annonces::class)
+            ->getRepository(AnnoncesUser::class)
             ->findAll();
 
         return $this->render('poste_annonces/index.html.twig', [
@@ -29,11 +30,31 @@ class PosteAnnoncesController extends AbstractController
     #[Route('/new', name: 'app_poste_annonces_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $annonce = new Annonces();
+        $annonce = new AnnoncesUser();
         $form = $this->createForm(AnnoncesType::class, $annonce);
+        $form->remove('createdAt');
+        $form->remove('updatedAt');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // on recupère les images transmises
+            $images = $form->get('images')->getData();
+            // On boulcle sur les images
+            foreach ($images as $image) {
+                //On gener eun nouveau nom de fichier pour
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                //on va copier de fichier dans le dossier annonce
+                $image->move(
+                    $this->getParameter('annonces_directory'),
+                    $fichier
+                );
+
+                //On sotcke l'images dans la BDD (Son nom)
+                $img = new Images();
+                $img->setName($fichier);
+                $annonce->addImage($img);
+            }
+
             $entityManager->persist($annonce);
             $entityManager->flush();
 
@@ -41,21 +62,21 @@ class PosteAnnoncesController extends AbstractController
         }
 
         return $this->renderForm('poste_annonces/new.html.twig', [
-            'annonce' => $annonce,
+            'AnnoncesUser' => $annonce,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_poste_annonces_show', methods: ['GET'])]
-    public function show(Annonces $annonce): Response
+    public function show(AnnoncesUser $annonce): Response
     {
         return $this->render('poste_annonces/show.html.twig', [
-            'annonce' => $annonce,
+            'AnnoncesUser' => $annonce,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_poste_annonces_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Annonces $annonce, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, AnnoncesUser $annonce, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AnnoncesType::class, $annonce);
         $form->handleRequest($request);
@@ -67,15 +88,15 @@ class PosteAnnoncesController extends AbstractController
         }
 
         return $this->renderForm('poste_annonces/edit.html.twig', [
-            'annonce' => $annonce,
+            'AnnoncesUser' => $annonce,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_poste_annonces_delete', methods: ['POST'])]
-    public function delete(Request $request, Annonces $annonce, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, AnnoncesUser $annonce, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$annonce->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $annonce->getId(), $request->request->get('_token'))) {
             $entityManager->remove($annonce);
             $entityManager->flush();
         }

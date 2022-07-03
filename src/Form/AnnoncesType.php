@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Annonces;
+use App\Entity\AnnoncesUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,28 +25,17 @@ class AnnoncesType extends AbstractType
                 'required' => false,
                 // unmapped fields can't define their validation using annotations
                 // in the associated entity, so you can use the PHP constraint classes
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/jpg',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid Image',
-                    ])
-                ],
             ])
-            ->add('active')
-            //->add('updatedAt')
-           // ->add('createdAt')
-            ->add('category')
-        ;
+            ->add('activer')
+            ->add('updatedAt')
+            ->add('createdAt')
+            ->add('category');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Annonces::class,
+            'data_class' => AnnoncesUser::class,
         ]);
     }
 }
