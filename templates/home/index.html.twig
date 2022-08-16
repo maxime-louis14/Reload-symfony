@@ -29,6 +29,10 @@
 
         <hr class="featurette-divider">
         {% for annonce in annonces %}
+        {# je dois faire un bloc if pour afficher les annonces autoriser  #}
+
+         {% if annonce.active == true %}  
+
         <div class="row featurette">
             <div class="col-md-7">
                 <h2 class="featurette-heading">{{ annonce.name }} <span class="text-muted"> </span></h2>
@@ -38,6 +42,8 @@
             {# <img class="images-annonces" src="{{asset('\assets\upload\images\annonces' ~ annonce.images)}}"alt="Les images des annonces" > #}
             </div>
         </div>
+
+        {% endif %}
         {% endfor %}
         <hr class="featurette-divider">
 

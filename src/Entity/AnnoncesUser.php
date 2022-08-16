@@ -22,7 +22,7 @@ class AnnoncesUser
     private $description;
 
     #[ORM\Column(type: 'boolean')]
-    private $activer;
+    private $active;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
@@ -71,14 +71,14 @@ class AnnoncesUser
         return $this;
     }
 
-    public function getActiver(): ?bool
+    public function getActive(): ?bool
     {
-        return $this->activer;
+        return $this->active;
     }
 
-    public function setActiver(bool $activer): self
+    public function setActive(bool $active): self
     {
-        $this->activer = $activer;
+        $this->active = $active;
 
         return $this;
     }

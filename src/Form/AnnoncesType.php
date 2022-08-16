@@ -26,7 +26,7 @@ class AnnoncesType extends AbstractType
                 // unmapped fields can't define their validation using annotations
                 // in the associated entity, so you can use the PHP constraint classes
             ])
-            ->add('activer')
+            ->add('active')
             ->add('updatedAt')
             ->add('createdAt')
             ->add('category');

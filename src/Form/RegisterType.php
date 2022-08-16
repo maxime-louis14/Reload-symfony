@@ -48,10 +48,15 @@ class RegisterType extends AbstractType
                     'placeholder' => 'Merci de saisir votre adresse mail'
                 ]
             ])
+            // Ici, c'est le chant pour créer le mot de passe du compte
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe et la confirmation doivent être indentique',
                 'label' => 'mot de passe',
+                'constraints' => new Length([
+                    'min' => 12,
+                    'max' => 15,
+                ]),
                 'required' => true,
                 'first_options' => ['label' => 'Mot de passe'],
                 'attr' => [
