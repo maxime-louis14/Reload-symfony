@@ -8,36 +8,42 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
+                {# <th>Id</th> #}
+                <th>Nom</th>
                 <th>Description</th>
                 <th>Active</th>
-                <th>UpdatedAt</th>
-                <th>CreatedAt</th>
+                <th>Mis à jour à</th>
+                <th>Créé à</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for annonce in annonces %}
             <tr>
-                <td>{{ annonce.id }}</td>
+                {# <td>{{ annonce.id }}</td> #}
                 <td>{{ annonce.name }}</td>
                 <td>{{ annonce.description }}</td>
-                <td>{{ annonce.active ? 'true' : 'false' }}</td>
+                {# <td>{{ annonce.active ? 'true' : 'false' }}</td> #}
+                {% if annonce.active == true %}
+                    <td> Oui </td>
+
+                {% elseif annonce.active == false %}
+                        <td> Non </td>
+                {% endif %}
                 <td>{{ annonce.updatedAt ? annonce.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ annonce.createdAt ? annonce.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_poste_annonces_show', {'id': annonce.id}) }}">show</a>
-                    <a href="{{ path('app_poste_annonces_edit', {'id': annonce.id}) }}">edit</a>
+                    <a href="{{ path('app_poste_annonces_show', {'id': annonce.id}) }}">Afficher</a>
+                    <a href="{{ path('app_poste_annonces_edit', {'id': annonce.id}) }}">Éditer</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_poste_annonces_new') }}">Create new</a>
+    <a href="{{ path('app_poste_annonces_new') }}">Créer une nouvelle annonce</a>
 {% endblock %}

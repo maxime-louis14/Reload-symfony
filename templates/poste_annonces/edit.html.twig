@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Annonces{% endblock %}
+{% block title %}Modifier les annonces{% endblock %}
 
 {% block content %}
-    <h1>Edit Annonces</h1>
+    <h1>Modifier les annonces</h1>
 
-    {{ include('poste_annonces/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('poste_annonces/_form.html.twig', {'button_label': 'Mise à jour'}) }}
 
-    <a href="{{ path('app_poste_annonces_index') }}">back to list</a>
+    <a href="{{ path('app_poste_annonces_index') }}">retour à la liste</a>
 
     {{ include('poste_annonces/_delete_form.html.twig') }}
 {% endblock %}

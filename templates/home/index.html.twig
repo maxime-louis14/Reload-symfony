@@ -31,17 +31,29 @@
         {% for annonce in annonces %}
         {# je dois faire un bloc if pour afficher les annonces autoriser  #}
 
+
          {% if annonce.active == true %}  
 
-        <div class="row featurette">
+        <div class="row g-0 bg-light position-relative">
+            <div class="col-md-6 mb-md-0 p-md-4">
+                <img src="assets/upload/images/annonces/shutterstock_1701604459.jpg" class="w-100" alt="Images de l'équipe">
+            </div>
+            <div class="col-md-6 p-4 ps-md-0">
+                <h4 class="mt-0">{{ annonce.name }}</h4>
+                <p>{{annonce.description | raw}}</p>
+                {# <a href="#" class="stretched-link">Voir plus</a> #}
+            </div>
+        </div>
+
+        {# <div class="row featurette">
             <div class="col-md-7">
                 <h2 class="featurette-heading">{{ annonce.name }} <span class="text-muted"> </span></h2>
                 <p class="lead">{{annonce.description | raw}}</p>
             </div>
             <div class="col-md-5">
             {# <img class="images-annonces" src="{{asset('\assets\upload\images\annonces' ~ annonce.images)}}"alt="Les images des annonces" > #}
-            </div>
-        </div>
+            {# </div> #}
+        {# </div> #}
 
         {% endif %}
         {% endfor %}
